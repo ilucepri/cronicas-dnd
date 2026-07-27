@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+*.local
+.vite
+
+# Datos e imágenes de sesión: los regenera `npm run import` (en local desde el
+# vault; en CI desde chaotic-garden). No se commitean; la fuente de verdad son
+# las notas. Los retratos y covers de public/campaigns/*/ (portraits, cover.png)
+# SÍ se commitean, porque son arte que no sale del import.
+src/data/*.json
+public/campaigns/*/img
