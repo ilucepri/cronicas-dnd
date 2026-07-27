@@ -14,18 +14,12 @@ on:
   schedule:
     - cron: '0 */3 * * *'
 
-# Permisos para publicar en GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: deploy
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout de la web
@@ -50,28 +44,8 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Desplegar en Firebase Hosting
+        run: npx firebase-tools@13 deploy --only hosting --project cronicas-dnd --non-interactive
         env:
-          # Base para GitHub Pages de proyecto. Si publicas en un dominio raíz
-          # (Netlify/Cloudflare/dominio propio), pon VITE_BASE=/ o bórralo.
-          VITE_BASE: /cronicas-dnd/
-
-      - name: Fallback SPA para GitHub Pages
-        run: |
-          cp dist/index.html dist/404.html
-          touch dist/.nojekyll
-
-      - name: Subir artefacto de Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Desplegar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
