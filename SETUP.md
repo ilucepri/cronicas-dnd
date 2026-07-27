@@ -1,65 +1,77 @@
-# Puesta en marcha del despliegue automático
+# Puesta en marcha del despliegue
 
-La web se reconstruye sola a partir de tus notas **publicadas** en Obsidian.
+La web se aloja en **Firebase Hosting**: https://cronicas-dnd.web.app
 
 ## Cómo funciona
 
 ```
-Obsidian  --(Publicar / Digital Garden)-->  GitHub: ilucepri/chaotic-garden
-                                                     |
-                                          (aviso de que hay cambios)
-                                                     v
+Obsidian --(Publicar / Digital Garden)--> GitHub: ilucepri/chaotic-garden
+                                                    |
+                                         (aviso de que hay cambios)
+                                                    v
 GitHub Actions en ilucepri/cronicas-dnd:  clona chaotic-garden -> importa (modo DG)
-                                          -> build -> despliega en GitHub Pages
+                                           -> build -> deploy a Firebase Hosting
 ```
 
 - **Fuente de las notas**: el repo de tu Digital Garden (`ilucepri/chaotic-garden`),
   que ya se actualiza cada vez que le das a *Publicar* en Obsidian.
-- **La web** (`ilucepri/cronicas-dnd`) construye desde ahí con `SOURCE=dg` y publica
-  en GitHub Pages. No hay que subir nada a mano.
+- **La web** (`ilucepri/cronicas-dnd`) construye desde ahí con `SOURCE=dg` y
+  despliega en Firebase. No hay que subir nada a mano.
 
-> Nota de privacidad: `chaotic-garden` es **público** (así es tu jardín digital),
-> así que las notas ya son públicas. Reusarlo no expone nada nuevo. Si prefieres
-> notas privadas, habría que montar un repo privado aparte + Obsidian Git; dímelo
-> y lo cambiamos.
+> Privacidad: `chaotic-garden` es **público** (así es tu jardín digital), así que
+> las notas ya son públicas. El repo de la web también es público, pero no
+> contiene las notas (se generan en el build). Firebase sirve solo el resultado.
 
-## Lo que tienes que hacer una vez
+## Desplegar a mano (lo más rápido, como tus otras apps)
 
-### 0. Subir el workflow de despliegue
-El archivo `.github/workflows/deploy.yml` está en tu carpeta local pero no se
-subió con el resto (el token de `gh` necesita el permiso `workflow`, y además
-quedó guardado con el nombre de usuario viejo `Iluxsio` tras renombrarte a
-`ilucepri`, lo que hace fallar `gh auth refresh`).
+Con la CLI de Firebase ya logueada:
 
-**Forma más fácil (desde la web, sin tocar `gh`):** en
-`github.com/ilucepri/cronicas-dnd` → **Add file → Create new file** → ruta
-`.github/workflows/deploy.yml` → pega el contenido del archivo local → Commit.
+```bash
+npm run deploy    # import (desde tu vault) + build + firebase deploy
+```
 
-**Alternativa por consola** (arregla también `gh` para el futuro):
+Esto sube al instante lo que tengas en el vault, incluidas las sesiones aún sin
+publicar en Digital Garden. Útil para actualizar sin esperar al automático.
+
+## Automático al publicar (una configuración inicial)
+
+Para que se despliegue solo cuando publicas en Obsidian:
+
+### 1. Subir el workflow
+`.github/workflows/deploy.yml` está en tu carpeta local pero no se subió con el
+resto (el token de `gh` necesita permiso `workflow`, y quedó con el nombre viejo
+`Iluxsio` tras renombrarte a `ilucepri`).
+
+**Fácil (web):** en `github.com/ilucepri/cronicas-dnd` → **Add file → Create new
+file** → ruta `.github/workflows/deploy.yml` → pega el contenido del archivo
+local → Commit.
+
+**Por consola** (arregla también `gh`):
 ```bash
 gh auth logout -h github.com
 gh auth login -h github.com -s workflow -w   # entra como ilucepri
-git add .github/workflows/deploy.yml && git commit -m "Añadir workflow de despliegue" && git push
+git add .github/workflows/deploy.yml && git commit -m "Añadir workflow" && git push
 ```
 
-### 1. Activar GitHub Pages
-En `github.com/ilucepri/cronicas-dnd` → **Settings → Pages** →
-**Source: GitHub Actions**. Con eso, el workflow ya despliega.
+### 2. Dar acceso a Firebase al workflow (token)
+```bash
+firebase login:ci        # abre el navegador y te imprime un token
+```
+Copia el token y añádelo como secreto en el repo:
+`github.com/ilucepri/cronicas-dnd` → **Settings → Secrets and variables →
+Actions → New repository secret** → nombre `FIREBASE_TOKEN`, valor el token.
 
-La web quedará en: **https://ilucepri.github.io/cronicas-dnd/**
+Con eso, cada push a `chaotic-garden` (al publicar) reconstruye y despliega. Si
+no montas el aviso instantáneo del paso 3, igualmente se actualiza cada 3 horas.
 
-El primer despliegue se lanza solo al subir el repo (o desde la pestaña
-**Actions → Construir y desplegar → Run workflow**).
+### 3. (Opcional) Aviso instantáneo al publicar
+Sin esto, el refresco automático es cada 3 horas. Para que sea **al instante**:
 
-### 2. (Opcional) Actualización instantánea al publicar
-Sin esto, la web se refresca igualmente cada 3 horas (red de seguridad). Para que
-se actualice **al instante** cuando publicas:
-
-1. Crea un token fino en GitHub → *Settings → Developer settings → Fine-grained
-   tokens*, con acceso solo al repo `cronicas-dnd` y permiso **Contents: Read and write**.
-2. En `chaotic-garden` → *Settings → Secrets and variables → Actions* → **New secret**:
-   nombre `WEB_DISPATCH_TOKEN`, valor el token.
-3. Añade este archivo a `chaotic-garden` en `.github/workflows/notify-cronicas.yml`:
+1. Crea un token fino en GitHub (*Settings → Developer settings → Fine-grained
+   tokens*) con acceso solo a `cronicas-dnd` y permiso **Contents: Read and write**.
+2. En `chaotic-garden` → *Settings → Secrets → Actions* → nuevo secreto
+   `WEB_DISPATCH_TOKEN` con ese token.
+3. Añade a `chaotic-garden` el archivo `.github/workflows/notify-cronicas.yml`:
 
 ```yaml
 name: Avisar a Cronicas
@@ -78,21 +90,9 @@ jobs:
             -d '{"event_type":"notes-updated"}'
 ```
 
-## Publicar en un dominio propio (opcional)
-Si más adelante quieres un dominio bonito (como el de tu Foundry) en vez de
-`ilucepri.github.io/cronicas-dnd/`, lo más cómodo es **Cloudflare Pages** o
-**Netlify** conectados a `cronicas-dnd`, con:
-- Build command: `git clone --depth 1 https://github.com/ilucepri/chaotic-garden.git chaotic-garden && SOURCE=dg VAULT_DIR=chaotic-garden npm run import && npm run build`
-- Publish dir: `dist`  ·  y quita `VITE_BASE` (o ponlo a `/`).
-- El fallback SPA ya está resuelto con `public/_redirects`.
-
-Dímelo y lo dejamos montado.
-
 ## Desarrollo local
-Sigues pudiendo trabajar en local contra tu vault (con las sesiones más nuevas,
-aún sin publicar):
 
 ```bash
-npm run import   # lee D:\ROL\...\Historias
+npm run import   # lee D:\ROL\...\Historias (tus notas más nuevas)
 npm run dev
 ```

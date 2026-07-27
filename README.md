@@ -35,24 +35,17 @@ Por defecto el vault se lee de
 VAULT_DIR="ruta/al/vault" npm run import
 ```
 
-## Publicar (gratis, sin tarjeta)
+## Publicar
 
-Es un sitio estático:
+Alojada en **Firebase Hosting**: https://cronicas-dnd.web.app (URLs limpias sin
+`#`, con el rewrite SPA de `firebase.json`).
 
 ```bash
-npm run build    # genera dist/
+npm run deploy    # import + build + firebase deploy --only hosting
 ```
 
-Sube `dist/` a **Netlify** (arrastrar la carpeta) o **Cloudflare Pages**. Las
-URLs son limpias (sin `#`), p. ej. `tu-sitio/oro/sesion/90`. Para que los
-enlaces directos y las recargas no den 404, el sitio necesita *fallback* a
-`index.html`: ya está resuelto con `public/_redirects` (`/* /index.html 200`),
-que Netlify y Cloudflare Pages leen automáticamente.
-
-- **Vercel**: añade un `vercel.json` con un rewrite `/(.*) → /index.html`.
-- **GitHub Pages**: no soporta bien el fallback SPA en rutas limpias; si te toca
-  usarlo, lo más sencillo es volver a `HashRouter` (URLs con `#`) en
-  `src/main.jsx`.
+Y automáticamente en cada publicación de Obsidian vía GitHub Actions. Ver
+[SETUP.md](SETUP.md) para el despliegue automático.
 
 ## Añadir cosas
 
