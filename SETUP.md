@@ -27,16 +27,20 @@ GitHub Actions en ilucepri/cronicas-dnd:  clona chaotic-garden -> importa (modo 
 
 ### 0. Subir el workflow de despliegue
 El archivo `.github/workflows/deploy.yml` está en tu carpeta local pero no se
-pudo subir automáticamente (el token necesita el permiso `workflow`). Sube el
-workflow con:
+subió con el resto (el token de `gh` necesita el permiso `workflow`, y además
+quedó guardado con el nombre de usuario viejo `Iluxsio` tras renombrarte a
+`ilucepri`, lo que hace fallar `gh auth refresh`).
 
+**Forma más fácil (desde la web, sin tocar `gh`):** en
+`github.com/ilucepri/cronicas-dnd` → **Add file → Create new file** → ruta
+`.github/workflows/deploy.yml` → pega el contenido del archivo local → Commit.
+
+**Alternativa por consola** (arregla también `gh` para el futuro):
 ```bash
-gh auth refresh -h github.com -s workflow
+gh auth logout -h github.com
+gh auth login -h github.com -s workflow -w   # entra como ilucepri
 git add .github/workflows/deploy.yml && git commit -m "Añadir workflow de despliegue" && git push
 ```
-
-(Alternativa sin consola: en el repo, botón **Add file → Create new file**, ruta
-`.github/workflows/deploy.yml`, y pega el contenido del archivo local.)
 
 ### 1. Activar GitHub Pages
 En `github.com/ilucepri/cronicas-dnd` → **Settings → Pages** →
