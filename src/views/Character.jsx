@@ -38,7 +38,6 @@ export default function Character() {
           )}
         </div>
         <div>
-          <span className="tag tag-accent" style={{ fontSize: 10, marginBottom: 'var(--space-3)', display: 'inline-block' }}>{char.status}</span>
           <h1 style={{ marginBottom: 'var(--space-2)' }}>{char.name}</h1>
           <div style={{ fontSize: 15, color: 'var(--color-accent-300)', marginBottom: 'var(--space-6)' }}>{char.tagline}</div>
           <div style={{ fontSize: 16, lineHeight: 1.7 }}>

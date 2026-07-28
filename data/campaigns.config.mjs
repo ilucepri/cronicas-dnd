@@ -125,7 +125,7 @@ export const party = {
       img: 'campaigns/oro-sobre-plata/portraits/venti.png',
       status: 'Portadora del Orbe', dot: ACCENT,
       blurb: [
-        'Del clan Zarpa Negra, de Chondath; se rumorea que su linaje llegó a gobernar Amn. Camada de tres, busca por toda la campaña a su hermano Corvo. Devota de Milil, bardo del Colegio del Glamour, toca el shamisen y el baglamá.',
+        'Del clan Zarpa Negra, de Chondath; se rumorea que su linaje llegó a gobernar Amn. Camada de tres, busca por toda la campaña a su hermano Corvo. Devoto de Milil, bardo del Colegio del Glamour, toca el shamisen y el baglamá.',
         'Porta dos fragmentos del Orbe dracónico, cada uno un tercio del alma de Malystryx, y ha sellado un pacto con Orcus. Fue amante de una noche de la dragona Ondrur.',
       ],
       facts: [

@@ -40,8 +40,7 @@ export default function Party() {
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: p.dot }} />
                 <div className="card-title" style={{ margin: 0, fontSize: 18 }}>{p.name}</div>
               </div>
-              <div style={{ fontSize: 12, color: 'var(--color-neutral-500)', marginBottom: 'var(--space-3)' }}>{p.tagline}</div>
-              <span className="tag tag-accent" style={{ fontSize: 10 }}>{p.status}</span>
+              <div style={{ fontSize: 12, color: 'var(--color-neutral-500)' }}>{p.tagline}</div>
             </div>
           </Link>
         ))}
