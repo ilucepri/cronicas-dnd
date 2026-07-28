@@ -228,7 +228,7 @@ export const party = {
 
   saltmarsh: [
     {
-      id: 'virellia', name: 'Virellia Arcanthis', short: 'Maga', tagline: 'Maga elfa · La jugadora',
+      id: 'virellia', name: 'Virellia Arcanthis', short: 'Maga', tagline: 'Maga elfa',
       img: 'campaigns/saltmarsh/portraits/virellia.png',
       status: 'La jugadora', dot: ACCENT,
       blurb: ['Maga elfa, el personaje de la jugadora. Lleva en el bolso un coral marino mágico sin identificar.'],
@@ -236,24 +236,28 @@ export const party = {
     },
     {
       id: 'genya', name: 'Genya Gulyayev', short: 'Fighter', tagline: 'Fighter dragonborn',
+      img: 'campaigns/saltmarsh/portraits/genya.png',
       status: 'Sargento de la guardia', dot: ACCENT,
       blurb: ['Guerrera dragonborn. Es sargento de la guardia de Saltmarsh.'],
       facts: [{ label: 'Clase', value: 'Fighter' }, { label: 'Raza', value: 'Dragonborn' }],
     },
     {
       id: 'arkos', name: 'Arkos Hightower', short: 'Bard', tagline: 'Bardo humano',
+      img: 'campaigns/saltmarsh/portraits/arkos.jpg',
       status: 'Drogado con Sal Roja', dot: NEUTRAL,
       blurb: ['Bardo humano. Cassandra lo drogó con Sal Roja; despertó físicamente reforzado y sin recuerdos. Usa un código de emergencia: cielo, suelo, árbol.'],
       facts: [{ label: 'Clase', value: 'Bard' }, { label: 'Raza', value: 'Humano' }],
     },
     {
       id: 'dravok', name: 'Dravok Kurrid', short: 'Bárbaro', tagline: 'Bárbaro goliath',
+      img: 'campaigns/saltmarsh/portraits/Dravok.jpeg',
       status: 'Hijo adoptivo de Lankus', dot: ACCENT,
       blurb: ['Bárbaro goliath, hijo adoptivo de Lankus, dueño de la taberna Cabra de Mimbre. Brak-Thar, el Ejecutor, lo llama "hermano".'],
       facts: [{ label: 'Clase', value: 'Bárbaro' }, { label: 'Raza', value: 'Goliath' }],
     },
     {
       id: 'lodd', name: "Loddrantelmo 'Lodd'", short: 'Druida', tagline: 'Druida gnomo · Siempremojado',
+      img: 'campaigns/saltmarsh/portraits/Lodd.png',
       status: 'Recuerda huellas en el pantano', dot: ACCENT,
       blurb: ['Druida gnomo, apodado Siempremojado. Recuerda huellas de hombres lagarto en el pantano.'],
       facts: [{ label: 'Clase', value: 'Druida' }, { label: 'Raza', value: 'Gnomo' }],
