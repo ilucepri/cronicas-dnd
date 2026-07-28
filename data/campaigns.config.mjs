@@ -81,6 +81,25 @@ export const campaigns = [
   },
 ]
 
+// Página "Sobre mí" (de sitio, accesible desde la barra en cualquier campaña).
+// Texto de relleno: edítalo a tu gusto y vuelve a lanzar `npm run import`.
+// Para el retrato, deja una imagen en public/about.jpg y pon img: 'about.jpg'.
+export const about = {
+  kicker: 'Sobre mí',
+  heading: 'Quién escribe esto',
+  img: null,
+  paras: [
+    'Escribe aquí quién eres, cuánto llevas dirigiendo o jugando, y por qué guardas estas notas. Un par de párrafos bastan: este espacio es la voz de la mesa, no una biografía.',
+    'Segundo párrafo para lo que quieras contar: cómo empezó la campaña, qué grupo la juega, o qué te llevó a pasar las notas de Obsidian a este archivo.',
+  ],
+  facts: [
+    { label: 'Rol en la mesa', value: 'Dungeon Master' },
+    { label: 'Jugando desde', value: '2019' },
+    { label: 'Sistema favorito', value: 'D&D 5e' },
+  ],
+  tags: ['Worldbuilding', 'Homebrew', 'Campañas largas', 'Obsidian'],
+}
+
 // Arcos de Oro sobre Plata. El último (`to` alto) recoge las sesiones nuevas.
 export const arcs = {
   oro: [

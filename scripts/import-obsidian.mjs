@@ -13,7 +13,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { campaigns, arcs, party, lore } from '../data/campaigns.config.mjs'
+import { campaigns, arcs, party, lore, about } from '../data/campaigns.config.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -309,6 +309,7 @@ function main() {
   }
 
   const index = {
+    about,
     campaigns: campaigns.map((c) => ({
       id: c.id,
       name: c.name,

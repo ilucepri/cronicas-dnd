@@ -14,6 +14,10 @@ for (const [path, mod] of Object.entries(modules)) {
 
 export const campaignsIndex = indexData.campaigns
 
+export function getAbout() {
+  return indexData.about || null
+}
+
 export function getCampaignMeta(id) {
   return campaignsIndex.find((c) => c.id === id) || null
 }

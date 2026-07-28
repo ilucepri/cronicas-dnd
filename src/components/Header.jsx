@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { campaignsIndex } from '../lib/data.js'
 import Icon from './Icon.jsx'
 
 export default function Header({ campaignId, meta, arcCount }) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+  const onAbout = location.pathname.endsWith('/sobre-mi')
 
   useEffect(() => {
     if (!open) return
@@ -96,9 +98,26 @@ export default function Header({ campaignId, meta, arcCount }) {
 
       <span style={{ fontSize: 12, color: 'var(--color-neutral-400)' }}>{metaText}</span>
       <span style={{ flex: 1 }} />
-      <span style={{ fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--color-neutral-400)', flex: 'none' }}>
-        Mis crónicas
-      </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flex: 'none' }}>
+        <button
+          onClick={() => navigate(`/${campaignId}/sobre-mi`)}
+          className="navbtn"
+          style={{
+            all: 'unset', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7,
+            padding: '5px 11px', borderRadius: 'var(--radius-md)', fontSize: 13,
+            ...(onAbout
+              ? { background: 'var(--color-accent-900)', color: 'var(--color-accent-200)', boxShadow: 'inset 0 0 0 1px var(--color-accent-800)' }
+              : { color: 'var(--color-neutral-300)' }),
+          }}
+        >
+          <Icon name="user" size={15} />
+          Sobre mí
+        </button>
+        <span style={{ width: 1, height: 18, background: 'var(--color-divider)' }} />
+        <span style={{ fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--color-neutral-400)' }}>
+          Mis crónicas
+        </span>
+      </div>
     </header>
   )
 }

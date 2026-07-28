@@ -1,15 +1,15 @@
 /* ===========================================================================
-   Crónicas de D&D — tema pergamino sobre el sistema Nocturne.
-   Tokens, tipografía y clases base recreadas del handoff de diseño.
+   Observatorio Arcano — tema arcano (oscuro) sobre el sistema Nocturne.
+   Índigo profundo + acento latón, titulares en Cormorant Garamond.
    =========================================================================== */
 
 :root {
   /* Tipografía */
-  --font-heading: 'Spectral', Georgia, serif;
-  --font-heading-weight: 500;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-heading-weight: 600;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 
-  /* Espaciado (densidad 0.7× de Nocturne) */
+  /* Espaciado (densidad 0.7× de Nocturne; no existe --space-5) */
   --space-1: 2.8px;
   --space-2: 5.6px;
   --space-3: 8.4px;
@@ -22,44 +22,47 @@
   --radius-md: 8px;
   --radius-lg: 14px;
 
-  /* Color — tema pergamino */
-  --color-bg: #f4ecdb;
-  --color-surface: #fbf6ea;
-  --color-text: #2c241a;
-  --color-divider: rgba(60, 40, 20, 0.18);
+  /* Color — tema arcano (oscuro) */
+  --color-bg: #171526;
+  --color-surface: #1f1c33;
+  --color-text: #e6e1f2;
+  --color-divider: rgba(200, 180, 255, 0.15);
 
-  --color-neutral-100: #2c241a;
-  --color-neutral-200: #4a4034;
-  --color-neutral-300: #6b5f4d;
-  --color-neutral-400: #877a63;
-  --color-neutral-500: #8f8168;
-  --color-neutral-600: #a99a7f;
-  --color-neutral-700: #c7b998;
-  --color-neutral-800: #e2d6ba;
-  --color-neutral-900: #ece0c8;
+  /* Neutros 100 (más fuerte) → 900 (más tenue) */
+  --color-neutral-100: #e6e1f2;
+  --color-neutral-200: #cdc7e0;
+  --color-neutral-300: #a9a2be;
+  --color-neutral-400: #8f88a8;
+  --color-neutral-500: #7d7695;
+  --color-neutral-600: #5f5878;
+  --color-neutral-700: #423c5c;
+  --color-neutral-800: #2c2745;
+  --color-neutral-900: #241f3a;
 
-  --color-accent: #8a2b2b;
-  --color-accent-100: #4a1414;
-  --color-accent-200: #5e1a1a;
-  --color-accent-300: #7a2323;
-  --color-accent-400: #8a2b2b;
-  --color-accent-500: #a13636;
-  --color-accent-700: #cfa3a3;
-  --color-accent-800: #dcb6b6;
-  --color-accent-900: #f0ddd1;
+  /* Acento latón */
+  --color-accent: #c9a227;
+  --color-accent-100: #f7ecc4;
+  --color-accent-200: #f2e0a4;
+  --color-accent-300: #e0c05a;
+  --color-accent-400: #c9a227;
+  --color-accent-500: #a8861d;
+  --color-accent-700: #7d6420;
+  --color-accent-800: #5c4a18;
+  --color-accent-900: #2e2712;
 
-  /* Diálogo: azul tinta, único color fuera de la paleta pergamino/carmesí,
+  /* Diálogo: azul arcano, único color fuera de la paleta índigo/latón,
      reservado a la voz de los personajes. */
-  --color-dialogue: #2f4f7f;
+  --color-dialogue: #93b7ea;
 
-  --shadow-sm: 0 0 0 1px rgba(60, 40, 20, 0.14);
-  --shadow-md: 0 0 0 1px rgba(60, 40, 20, 0.14), 0 6px 18px rgba(60, 40, 20, 0.14);
-  --shadow-lg: 0 0 0 1px rgba(60, 40, 20, 0.2), 0 16px 40px rgba(60, 40, 20, 0.22);
+  --shadow-sm: 0 0 0 1px rgba(200, 180, 255, 0.12);
+  --shadow-md: 0 0 0 1px rgba(200, 180, 255, 0.12), 0 8px 22px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 0 0 1px rgba(200, 180, 255, 0.16), 0 18px 44px rgba(0, 0, 0, 0.6);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body { margin: 0; }
+html, body { background: #171526; color-scheme: dark; }
 body {
   font-family: var(--font-body);
   font-size: 15px;
@@ -91,8 +94,9 @@ img { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 ::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
 
+* { scrollbar-color: #3a3357 transparent; scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: var(--color-neutral-800); border-radius: 8px; }
+::-webkit-scrollbar-thumb { background: #3a3357; border-radius: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 /* — botones — */

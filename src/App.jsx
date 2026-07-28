@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, Outlet, useParams, useLocation, useOutletContext } from 'react-router-dom'
 import { getCampaign, getCampaignMeta } from './lib/data.js'
+import Masthead from './components/Masthead.jsx'
 import Header from './components/Header.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import About from './views/About.jsx'
 import Home from './views/Home.jsx'
 import Sessions from './views/Sessions.jsx'
 import Session from './views/Session.jsx'
@@ -32,6 +34,7 @@ function Layout() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Masthead />
       <Header campaignId={campaignId} meta={meta} arcCount={arcCount} />
       {campaign && meta.populated ? (
         <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
@@ -66,6 +69,7 @@ export default function App() {
           <Route path="mundo" element={<Lore />} />
           <Route path="mundo/:id" element={<LoreItem />} />
           <Route path="linea-temporal" element={<Timeline />} />
+          <Route path="sobre-mi" element={<About />} />
         </Route>
         <Route path="*" element={<Navigate to="/oro" replace />} />
       </Routes>

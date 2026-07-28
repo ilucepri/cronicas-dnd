@@ -6,7 +6,7 @@ import Icon from '../components/Icon.jsx'
 function HeroCover({ campaign }) {
   const src = campaign.cover ? assetUrl(campaign.cover) : ''
   return (
-    <div style={{ aspectRatio: '4 / 5', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', background: 'var(--color-neutral-900)' }}>
+    <div style={{ aspectRatio: '3 / 4', borderRadius: 'var(--radius-md)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', background: 'var(--color-neutral-900)' }}>
       {src ? (
         <img src={src} alt={campaign.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
@@ -36,12 +36,15 @@ export default function Home() {
 
   return (
     <section>
-      <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 1fr', gap: 'var(--space-8)', alignItems: 'center', marginBottom: 'calc(var(--space-8) * 1.6)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 'var(--space-8)', alignItems: 'center', marginBottom: 'calc(var(--space-8) * 1.6)' }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-accent-400)', marginBottom: 'var(--space-3)' }}>
-            {campaign.heroKicker || campaign.party}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 'var(--space-2)' }}>
+            <span style={{ width: 22, height: 1, background: 'var(--color-accent-400)' }} />
+            <span style={{ fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--color-accent-400)' }}>
+              {campaign.heroKicker || campaign.party}
+            </span>
           </div>
-          <h1 style={{ fontSize: 52, letterSpacing: '-.03em', marginBottom: 'var(--space-4)' }}>{campaign.name}</h1>
+          <h1 style={{ fontSize: 46, lineHeight: 1, letterSpacing: '-.03em', marginBottom: 'var(--space-4)' }}>{campaign.name}</h1>
           <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--color-neutral-300)', maxWidth: '52ch', marginBottom: 'var(--space-6)' }}>
             {campaign.intro}
           </p>
