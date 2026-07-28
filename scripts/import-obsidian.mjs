@@ -12,8 +12,9 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { execSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { campaigns, arcs, party, lore, about } from '../data/campaigns.config.mjs'
+import { campaigns, arcs, party, about } from '../data/campaigns.config.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -101,6 +102,112 @@ function arcIdOf(campaignId, n) {
   const list = arcs[campaignId] || []
   const arc = list.find((a) => n >= a.from && n <= a.to)
   return arc ? arc.id : ''
+}
+
+// ---- lore (El Mundo): lugares, NPCs y entidades ----------------------------
+
+function slugify(name) {
+  return name
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+// Tipo (etiqueta) deducido de la carpeta contenedora. '' si no está claro.
+function deriveLoreType(file, vaultPath) {
+  const rel = path.relative(vaultPath, file).replace(/\\/g, '/').toLowerCase()
+  if (rel.includes('dragon')) return 'Dragón'
+  if (rel.includes('mision')) return 'Misión'
+  if (rel.includes('lugar')) return 'Lugar'
+  if (rel.includes('/npc')) return 'NPC'
+  return ''
+}
+
+// Primer párrafo real como resumen para la tarjeta (sin markdown, recortado).
+function blurbFrom(body) {
+  for (const line of body.split('\n')) {
+    const t = line.trim()
+    // Salta encabezados, citas/callouts, imágenes y listas — pero NO los
+    // párrafos en cursiva (que empiezan por *texto*, no por "* " de lista).
+    if (!t || /^#/.test(t) || /^>/.test(t) || /^!\[/.test(t) || /^[-*]\s/.test(t)) continue
+    let s = t
+      .replace(/\*\*|\*|`/g, '')
+      .replace(/\[\[([^\]|]+)(?:\|([^\]]*))?\]\]/g, (_, tgt, alias) => (alias || tgt.split('#').pop() || tgt).trim())
+      .replace(/\s+/g, ' ')
+      .trim()
+    if (s.length > 160) s = s.slice(0, 157).replace(/\s+\S*$/, '') + '…'
+    return s
+  }
+  return ''
+}
+
+let _cwebp = null
+function hasCwebp() {
+  if (_cwebp === null) {
+    try { execSync('cwebp -version', { stdio: 'ignore' }); _cwebp = true } catch { _cwebp = false }
+  }
+  return _cwebp
+}
+
+// Convierte a webp las imágenes de mundo que dejes en
+// public/campaigns/<id>/lore/ y que no sean ya webp (necesita cwebp; en CI no
+// hace nada porque ahí ya están commiteadas en webp).
+function convertLoreImagesToWebp(campaignId) {
+  const dir = path.join(ROOT, 'public', 'campaigns', campaignId, 'lore')
+  if (!fs.existsSync(dir) || !hasCwebp()) return
+  for (const f of fs.readdirSync(dir)) {
+    const ext = path.extname(f).toLowerCase()
+    if (!['.png', '.jpg', '.jpeg'].includes(ext)) continue
+    const src = path.join(dir, f)
+    const dest = path.join(dir, path.basename(f, ext) + '.webp')
+    try {
+      execSync(`cwebp -quiet -q 82 "${src}" -o "${dest}"`)
+      fs.rmSync(src)
+      console.log(`  · webp: ${f} → ${path.basename(dest)}`)
+    } catch {}
+  }
+}
+
+function detectLoreImage(campaignId, slug) {
+  for (const ext of ['webp', 'png', 'jpg', 'jpeg']) {
+    const rel = `campaigns/${campaignId}/lore/${slug}.${ext}`
+    if (fs.existsSync(path.join(ROOT, 'public', rel))) return rel
+  }
+  return null
+}
+
+// Construye las entradas de "El Mundo" desde las notas con tag #dnd/lore.
+function buildLore(cfg, vaultPath, imgIndex, outImgDir) {
+  convertLoreImagesToWebp(cfg.id)
+  const partyName = (cfg.party || '').toLowerCase()
+  const files = walk(vaultPath, (f) => f.toLowerCase().endsWith('.md')).filter((f) => {
+    if (/[\\/]sesiones[\\/]/i.test(f)) return false
+    return /#dnd\/lore\b/.test(fs.readFileSync(f, 'utf8'))
+  })
+
+  const entries = []
+  for (const file of files) {
+    const name = path.basename(file, '.md')
+    if (name.toLowerCase() === partyName) continue // el grupo va en Personajes
+    const raw = fs.readFileSync(file, 'utf8')
+    const pre = SOURCE === 'dg' ? normalizeDgLinks(raw) : raw
+    const cleaned = cleanBody(pre)
+    const { body } = resolveImages(cleaned, { campaignId: cfg.id, imgIndex, outDir: outImgDir })
+    const slug = slugify(name)
+    entries.push({
+      id: slug,
+      name,
+      type: deriveLoreType(file, vaultPath),
+      blurb: blurbFrom(body),
+      img: detectLoreImage(cfg.id, slug),
+      body,
+    })
+  }
+  // Los más desarrollados primero (buen orden para el top de la portada).
+  entries.sort((a, b) => b.body.length - a.body.length)
+  return entries
 }
 
 // ---- limpieza del cuerpo de una sesión -------------------------------------
@@ -255,6 +362,8 @@ function importCampaign(cfg) {
 
   sessions.sort((a, b) => a.n - b.n)
 
+  const loreEntries = buildLore(cfg, vaultPath, imgIndex, outImgDir)
+
   // Portada: detecta public/campaigns/<id>/cover.(png|jpg|jpeg|webp) si existe.
   let cover = null
   for (const ext of ['png', 'jpg', 'jpeg', 'webp']) {
@@ -276,7 +385,7 @@ function importCampaign(cfg) {
     arcs: arcs[cfg.id] || [],
     sessions,
     partyMembers: party[cfg.id] || [],
-    lore: lore[cfg.id] || [],
+    lore: loreEntries,
   }
 
   fs.writeFileSync(
@@ -286,7 +395,7 @@ function importCampaign(cfg) {
 
   const missCount = allMissing.length
   console.log(
-    `  ✓ ${cfg.name}: ${sessions.length} sesiones, ${totalImgs} imágenes copiadas` +
+    `  ✓ ${cfg.name}: ${sessions.length} sesiones, ${loreEntries.length} entradas de mundo, ${totalImgs} imágenes copiadas` +
       (missCount ? `, ${missCount} sin resolver (${[...new Set(allMissing)].slice(0, 4).join(', ')}…)` : ''),
   )
   return { id: cfg.id, count: sessions.length }

@@ -97,7 +97,7 @@ function SessionImage({ alt, src }) {
 }
 
 function Callout({ block, resolveLink, campaignId }) {
-  const isWarn = block.kind === 'WARNING'
+  const isWarn = block.kind === 'WARNING' || block.kind === 'DANGER'
   const accent = isWarn ? 'var(--color-accent-400)' : 'var(--color-neutral-400)'
   const bg = isWarn ? 'var(--color-accent-900)' : 'var(--color-neutral-900)'
   return (

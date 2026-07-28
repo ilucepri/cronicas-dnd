@@ -46,6 +46,7 @@ export function parseRuns(str) {
 const CALLOUT_LABEL = {
   NOTE: 'Nota',
   WARNING: 'Aviso',
+  DANGER: 'Peligro',
   TIP: 'Consejo',
   INFO: 'Info',
   IMPORTANT: 'Importante',

@@ -18,9 +18,9 @@ export default function Lore() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)' }}>
         {campaign.lore.map((l) => (
           <Link key={l.id} to={`${base}/mundo/${l.id}`} className="card hoverlift" style={{ textDecoration: 'none', color: 'inherit', textAlign: 'left', border: 'none' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
               <div className="card-title" style={{ margin: 0 }}>{l.name}</div>
-              <span className="tag tag-outline" style={{ fontSize: 10 }}>{l.type}</span>
+              {l.type && <span className="tag tag-outline" style={{ fontSize: 10, flex: 'none' }}>{l.type}</span>}
             </div>
             <p className="card-body" style={{ margin: 0 }}>{l.blurb}</p>
           </Link>

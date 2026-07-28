@@ -28,7 +28,7 @@ function Layout() {
   const meta = getCampaignMeta(campaignId)
   const campaign = getCampaign(campaignId)
 
-  if (!meta) return <Navigate to="/oro" replace />
+  if (!meta) return <Navigate to="/oro-sobre-plata" replace />
 
   const arcCount = campaign ? (campaign.arcs || []).length : 0
 
@@ -59,7 +59,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Navigate to="/oro" replace />} />
+        <Route path="/" element={<Navigate to="/oro-sobre-plata" replace />} />
         <Route path="/:campaign" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="sesiones" element={<Sessions />} />
@@ -71,7 +71,7 @@ export default function App() {
           <Route path="linea-temporal" element={<Timeline />} />
           <Route path="sobre-mi" element={<About />} />
         </Route>
-        <Route path="*" element={<Navigate to="/oro" replace />} />
+        <Route path="*" element={<Navigate to="/oro-sobre-plata" replace />} />
       </Routes>
     </>
   )

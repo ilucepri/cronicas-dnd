@@ -110,7 +110,7 @@ export default function Home() {
             {loreTop.map((l) => (
               <Link key={l.id} to={`${base}/mundo/${l.id}`} className="rowbtn" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 'var(--space-3)', padding: 'var(--space-3) var(--space-4)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-divider)' }}>
                 <span style={{ flex: 1 }}>{l.name}</span>
-                <span className="tag tag-outline" style={{ fontSize: 10 }}>{l.type}</span>
+                {l.type && <span className="tag tag-outline" style={{ fontSize: 10 }}>{l.type}</span>}
               </Link>
             ))}
             <button onClick={() => navigate(`${base}/mundo`)} className="btn btn-ghost" style={{ cursor: 'pointer', marginTop: 'var(--space-2)' }}>Todo el mundo</button>

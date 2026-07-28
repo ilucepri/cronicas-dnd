@@ -11,7 +11,7 @@
 // `Historias/`; si es null, la campaña sale como "sin notas todavía".
 export const campaigns = [
   {
-    id: 'oro',
+    id: 'oro-sobre-plata',
     name: 'Oro sobre Plata',
     subtitle: 'D&D 5e · Faerûn',
     party: 'La Compañía del Oso',
@@ -102,7 +102,7 @@ export const about = {
 
 // Arcos de Oro sobre Plata. El último (`to` alto) recoge las sesiones nuevas.
 export const arcs = {
-  oro: [
+  'oro-sobre-plata': [
     { id: 'a1', roman: 'I', name: 'Bajo la Montaña', sub: 'El tumulario, Lunargentea y los primeros no muertos.', from: 1, to: 10 },
     { id: 'a2', roman: 'II', name: 'En la Infraoscuridad', sub: 'Chamanes, micónidos y los caminos de la izquierda.', from: 11, to: 20 },
     { id: 'a3', roman: 'III', name: 'El Ikea de Carne', sub: 'Orlbar, los ilícidos y la dragona con piel humana.', from: 21, to: 30 },
@@ -120,10 +120,10 @@ const NEUTRAL = 'var(--color-neutral-400)'
 
 // La Compañía del Oso. `dot` colorea el punto en el aside y las fichas.
 export const party = {
-  oro: [
+  'oro-sobre-plata': [
     {
       id: 'venti', name: 'Venti Fortunati', short: 'Bardo', tagline: 'Bardo tabaxi · La jugadora',
-      img: 'campaigns/oro/portraits/venti.png',
+      img: 'campaigns/oro-sobre-plata/portraits/venti.png',
       status: 'Portadora del Orbe', dot: ACCENT,
       blurb: [
         'Del clan Zarpa Negra, de Kara-Tur; se rumorea que su linaje llegó a gobernar Amn. Camada de tres, busca por toda la campaña a su hermano Corvo. Devota de Tymora, toca el shamisen y el baglamá.',
@@ -138,7 +138,7 @@ export const party = {
     },
     {
       id: 'leia', name: 'Leia', short: 'Ranger', tagline: 'Ranger elfa · Altarraíz',
-      img: 'campaigns/oro/portraits/leia.png',
+      img: 'campaigns/oro-sobre-plata/portraits/leia.png',
       status: 'Salvar las marcas argénteas', dot: ACCENT,
       blurb: [
         'Del sur; huyó de su tribu. Su compañera animal es la osa Ursus y su arco está hecho con escamas de dragón. Entiende dracónico y tiene buen ojo para detectar no muertos.',
@@ -153,7 +153,7 @@ export const party = {
     },
     {
       id: 'drakhan', name: 'Drakhan', short: 'Monje', tagline: 'Monje semiorco',
-      img: 'campaigns/oro/portraits/drakhan.png',
+      img: 'campaigns/oro-sobre-plata/portraits/drakhan.png',
       status: 'Elegido de Uthgar', dot: ACCENT,
       blurb: [
         'Hijo de Kadu la Silenciosa (orca) y de Saldren Ilestra. En EP056 desterró para siempre tanto la furia de Uthgar como la de su propia sangre orca. Lleva tres tatuajes tribales —Grifo, Lobo y Árbol— que tiran hacia el noroeste.',
@@ -168,7 +168,7 @@ export const party = {
     },
     {
       id: 'agaricus', name: 'Agáricus', short: 'Druida', tagline: 'Druida micónido',
-      img: 'campaigns/oro/portraits/agaricus.png',
+      img: 'campaigns/oro-sobre-plata/portraits/agaricus.png',
       status: 'Regresó en EP077', dot: ACCENT,
       blurb: [
         'Expulsado de su tribu; usa el Enclave Esmeralda y el claro de Mielikki. Es el único con el conjuro de revivir y su compañero es Rannicus. Se marchó del grupo en EP027 y regresó en EP077.',
@@ -183,7 +183,7 @@ export const party = {
     },
     {
       id: 'janzu', name: 'Janzu', short: 'Pícaro', tagline: 'Pícaro mediano · Cofregrande',
-      img: 'campaigns/oro/portraits/janzu.png',
+      img: 'campaigns/oro-sobre-plata/portraits/janzu.png',
       status: 'Infectado de licantropía', dot: NEUTRAL,
       blurb: [
         'Su padre, Glimpetor —arpista y agente Zhentarim—, lo cambió por un burro de pequeño; Janzu acabó heredando su puesto. Fue infiltrado Zhentarim y luego Arpero, con Enon Yadar como superior y traidor.',
@@ -315,54 +315,5 @@ export const party = {
       blurb: ['Hechicera harengon.'],
       facts: [{ label: 'Clase', value: 'Sorcerer' }, { label: 'Raza', value: 'Harengon' }],
     },
-  ],
-}
-
-// El mundo: lugares, entidades y saberes.
-export const lore = {
-  oro: [
-    { id: 'lunargentea', name: 'Lunargentea', type: 'Ciudad', blurb: 'Ciudad de magia restringida y base de la Compañía del Oso.',
-      paras: [
-        'Ciudad de magia restringida y base de la Compañía del Oso. Alberga la academia donde estudia Corvo, la taberna La Hoja Brillante Esgrimida —con un cráneo de dragón verde sobre la puerta— y a NPCs como Yorus Mantoazur y Tristán Hojasolar.',
-        'En las últimas sesiones sufre asesinatos nocturnos y una plaga de ghouls ligada a la corrupción de Orcus y al ritualista Enon.',
-      ] },
-    { id: 'anauroch', name: 'El Anauroch', type: 'Desierto', blurb: 'Desierto frío y árido; el destino actual del grupo.',
-      paras: [
-        'Desierto frío y árido, dividido en el Alto Hielo, la Planicie de las Piedras Alzadas y la Espada. La despoblada Planicie es el lugar más probable para encontrar dragones.',
-        'La Carretera Negra, trazada por los Centarim como ruta comercial, lo cruza. Es el destino actual del grupo, siguiendo la pista del rey de los dragones al norte.',
-      ] },
-    { id: 'orlbar', name: 'Orlbar', type: 'Pueblo', blurb: 'Pueblo en decadencia marcado por los ilícidos.',
-      paras: [
-        'Pueblo en decadencia, marcado por los ilícidos y su “Ikea de carne”. Aquí murió Tostada, el perro de Janzu, enterrado con ritos de Urogalán, y de aquí escapó Alfred.',
-        'Punto de paso obligado hacia el Anauroch, ahora convertido en un monumento a la podredumbre.',
-      ] },
-    { id: 'altobosque', name: 'Alto Bosque', type: 'Región', blurb: 'Bosque de dragones y viejos secretos.',
-      paras: [
-        'Bosque de dragones. Hogar de Chloracridara, la dragona verde cuyo cráneo cuelga en la taberna de Lunargentea, y de Ondrur —Andrea—, la dragona con piel humana que fue amante de Venti.',
-      ] },
-    { id: 'norte', name: 'El Norte y las Tribus Bárbaras', type: 'Región', blurb: 'Tierra de las tribus utgardianas y sus dioses.',
-      paras: [
-        'Tierra de las tribus utgardianas —Grifo, Lobo, Árbol y otras—, de sus dioses y de sus guerras. Es clave en el destino de Drakhan, candidato a unirlas, y en el pasado de Leia.',
-      ] },
-    { id: 'infraoscuridad', name: 'La Infraoscuridad y el Reino Remoto', type: 'Región', blurb: 'Túneles, ilícidos y el Perdido Estelar.',
-      paras: [
-        'Los túneles de la Infraoscuridad, poblados por micónidos e ilícidos, y más allá el Reino Remoto, de donde procede el Perdido Estelar que acecha a Venti.',
-      ] },
-    { id: 'beorunna', name: 'Pozo de Beorunna', type: 'Lugar', blurb: 'Ligado a Corvo, el hermano perdido de Venti.',
-      paras: [
-        'Lugar ligado a Corvo, el hermano perdido de Venti al que busca por toda la campaña, y que le robó al Culto del Dragón un fragmento del Orbe.',
-      ] },
-    { id: 'orcus', name: 'Orcus', type: 'Entidad', blurb: 'Señor de los no muertos; su corrupción alimenta ghouls.',
-      paras: [
-        'Señor de los no muertos. Su corrupción alimenta ghouls y rituales por el mundo. Venti selló un pacto con él, y su ritualista Enon sigue suelto, dejando rituales a su paso.',
-      ] },
-    { id: 'dragones', name: 'Dragones y el Orbe', type: 'Lore', blurb: 'La crisis central: el Orbe dracónico y Malystryx.',
-      paras: [
-        'La crisis central de la campaña: el Orbe dracónico, la dragona Malystryx y el Culto del Dragón. Los fragmentos del Orbe guardan cada uno un tercio de un alma dracónica, y Venti carga con dos.',
-      ] },
-    { id: 'sucesos', name: 'Sucesos del mundo', type: 'Lore', blurb: 'Los grandes acontecimientos que enmarcan la historia.',
-      paras: [
-        'Los grandes acontecimientos que enmarcan la historia: la guerra de los gigantes, las intrigas del norte y los movimientos de las facciones por todo Faerûn.',
-      ] },
   ],
 }

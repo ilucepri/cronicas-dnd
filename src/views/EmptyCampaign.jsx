@@ -12,7 +12,7 @@ export default function EmptyCampaign({ name }) {
         <p className="text-muted" style={{ marginBottom: 'var(--space-6)' }}>
           Aún no has volcado las notas de esta campaña aquí. Cuando las traigas de Obsidian, tendrán la misma estructura: sesiones, personajes, mundo y línea temporal.
         </p>
-        <button onClick={() => navigate('/oro')} className="btn btn-ghost" style={{ cursor: 'pointer' }}>
+        <button onClick={() => navigate('/oro-sobre-plata')} className="btn btn-ghost" style={{ cursor: 'pointer' }}>
           Ir a Oro sobre Plata
         </button>
       </div>
