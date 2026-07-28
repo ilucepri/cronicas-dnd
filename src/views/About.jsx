@@ -34,22 +34,25 @@ export default function About() {
             </p>
           ))}
 
-          {about.facts && about.facts.length > 0 && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 190px))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
-              {about.facts.map((f, i) => (
-                <div key={i} style={{ borderLeft: '2px solid var(--color-accent-800)', paddingLeft: 'var(--space-3)' }}>
-                  <div style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-neutral-500)', marginBottom: 3 }}>{f.label}</div>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: 16 }}>{f.value}</div>
-                </div>
-              ))}
-            </div>
+          {about.email && (
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-neutral-300)', margin: '0 0 var(--space-6)' }}>
+              {about.contactLead}{' '}
+              <a href={`mailto:${about.email}`} style={{ color: 'var(--color-accent-300)', textDecorationColor: 'var(--color-accent-700)', textUnderlineOffset: 3 }}>
+                {about.email}
+              </a>
+            </p>
           )}
 
-          {about.tags && about.tags.length > 0 && (
-            <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-              {about.tags.map((t, i) => (
-                <span key={i} className="tag tag-outline">{t}</span>
-              ))}
+          {about.stack && about.stack.length > 0 && (
+            <div>
+              <div style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-neutral-500)', marginBottom: 'var(--space-3)' }}>
+                {about.stackLabel || 'Hecha con'}
+              </div>
+              <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+                {about.stack.map((t, i) => (
+                  <span key={i} className="tag tag-outline">{t}</span>
+                ))}
+              </div>
             </div>
           )}
         </div>

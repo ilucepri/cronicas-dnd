@@ -89,15 +89,14 @@ export const about = {
   heading: 'Quién escribe esto',
   img: null,
   paras: [
-    'Escribe aquí quién eres, cuánto llevas dirigiendo o jugando, y por qué guardas estas notas. Un par de párrafos bastan: este espacio es la voz de la mesa, no una biografía.',
-    'Segundo párrafo para lo que quieras contar: cómo empezó la campaña, qué grupo la juega, o qué te llevó a pasar las notas de Obsidian a este archivo.',
+    'Me llamo Irene, soy desarrolladora y una apasionada del rol. Llevo tres años jugando cada semana, y por el camino le he cogido el gustillo (rozando la obsesión, he de admitir) a tener buenas notas: ordenadas, completas y fáciles de releer.',
+    'Toda la crónica vive en mi Obsidian, pero quería poder leerla con un aspecto más estilizado. Observatorio Arcano es justo eso: una capa bonita sobre esas notas que las convierte en un archivo navegable sin dejar de ser las mismas notas de siempre.',
+    'Es un proyecto personal, sin ánimo de lucro y de uso privado para nuestras partidas.',
   ],
-  facts: [
-    { label: 'Rol en la mesa', value: 'Dungeon Master' },
-    { label: 'Jugando desde', value: '2019' },
-    { label: 'Sistema favorito', value: 'D&D 5e' },
-  ],
-  tags: ['Worldbuilding', 'Homebrew', 'Campañas largas', 'Obsidian'],
+  contactLead: '¿Quieres contactar conmigo? Escríbeme a',
+  email: 'irenelucenaprieto@gmail.com',
+  stackLabel: 'Hecha con',
+  stack: ['React', 'Vite', 'JavaScript', 'CSS', 'Firebase'],
 }
 
 // Arcos de Oro sobre Plata. El último (`to` alto) recoge las sesiones nuevas.
