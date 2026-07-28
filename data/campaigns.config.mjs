@@ -125,14 +125,14 @@ export const party = {
       img: 'campaigns/oro-sobre-plata/portraits/venti.png',
       status: 'Portadora del Orbe', dot: ACCENT,
       blurb: [
-        'Del clan Zarpa Negra, de Kara-Tur; se rumorea que su linaje llegó a gobernar Amn. Camada de tres, busca por toda la campaña a su hermano Corvo. Devota de Tymora, toca el shamisen y el baglamá.',
-        'Carga con lo más pesado de la trama: porta dos fragmentos del Orbe dracónico, cada uno un tercio del alma de Malystryx, y ha sellado un pacto con Orcus. Fue amante de la dragona Ondrur, lo que le ha traído problemas. La acecha el Perdido Estelar del Reino Remoto.',
+        'Del clan Zarpa Negra, de Chondath; se rumorea que su linaje llegó a gobernar Amn. Camada de tres, busca por toda la campaña a su hermano Corvo. Devota de Milil, bardo del Colegio del Glamour, toca el shamisen y el baglamá.',
+        'Porta dos fragmentos del Orbe dracónico, cada uno un tercio del alma de Malystryx, y ha sellado un pacto con Orcus. Fue amante de una noche de la dragona Ondrur.',
       ],
       facts: [
         { label: 'Raza', value: 'Tabaxi (clan Zarpa Negra)' },
-        { label: 'Devoción', value: 'Tymora' },
+        { label: 'Devoción', value: 'Milil' },
+        { label: 'Colegio', value: 'Glamour' },
         { label: 'Montura', value: 'Zephyr' },
-        { label: 'Familiar', value: 'Fromaggio (rata)' },
       ],
     },
     {
@@ -140,11 +140,11 @@ export const party = {
       img: 'campaigns/oro-sobre-plata/portraits/leia.png',
       status: 'Salvar las marcas argénteas', dot: ACCENT,
       blurb: [
-        'Del sur; huyó de su tribu. Su compañera animal es la osa Ursus y su arco está hecho con escamas de dragón. Entiende dracónico y tiene buen ojo para detectar no muertos.',
+        'Del sur; huyó de su tribu. Su compañero animal es el oso Ursus y su arco está hecho con escamas de dragón. Entiende dracónico y tiene buen ojo para detectar no muertos.',
         'Hizo un pacto con las brujas del pantano que la enemistó con la Tribu del Grifo. Mantiene un romance con Yorus Mantoazur, en Lunargentea.',
       ],
       facts: [
-        { label: 'Compañera', value: 'Ursus (osa)' },
+        { label: 'Compañero', value: 'Ursus (oso)' },
         { label: 'Arma', value: 'Arco de escamas de dragón' },
         { label: 'Romance', value: 'Yorus Mantoazur' },
         { label: 'Origen', value: 'Del sur' },
@@ -170,8 +170,8 @@ export const party = {
       img: 'campaigns/oro-sobre-plata/portraits/agaricus.png',
       status: 'Regresó en EP077', dot: ACCENT,
       blurb: [
-        'Expulsado de su tribu; usa el Enclave Esmeralda y el claro de Mielikki. Es el único con el conjuro de revivir y su compañero es Rannicus. Se marchó del grupo en EP027 y regresó en EP077.',
-        'Su colonia micónida fue capturada por los ilícidos y quedó casi aniquilada. Comparte jugador con Alfred (Sanmar): durante un tiempo convivieron como doble personalidad.',
+        'Expulsado de su tribu por su maestra Amanita, que quería para él algo más que ser un simple contribuyente de la colonia. Usa el Enclave Esmeralda y el claro de Mielikki; es el único con el conjuro de revivir y su compañero es Rannicus.',
+        'Su colonia micónida fue capturada por los ilícidos y quedó casi aniquilada. Tras salvar a los supervivientes en Orlbar, se marchó un tiempo (EP027) a cuidar de su tribu y regresó al grupo en EP077.',
       ],
       facts: [
         { label: 'Círculo', value: 'Enclave Esmeralda' },
@@ -185,13 +185,13 @@ export const party = {
       img: 'campaigns/oro-sobre-plata/portraits/janzu.png',
       status: 'Infectado de licantropía', dot: NEUTRAL,
       blurb: [
-        'Su padre, Glimpetor —arpista y agente Zhentarim—, lo cambió por un burro de pequeño; Janzu acabó heredando su puesto. Fue infiltrado Zhentarim y luego Arpero, con Enon Yadar como superior y traidor.',
-        'Entiende enano y dracónico. Tenía un perro-montura, Tostada, enterrado en Orlbar. Está infectado de licantropía de rata: se transforma en luna llena tras la mordedura de un hombre lobo.',
+        'Su padre de verdad lo cambió por un burro cuando era pequeño. En la jerga de los ladrones llama "padre" a Glimpetor —su jefe, arpista y agente Zhentarim—, cuyo puesto acabó heredando. Fue infiltrado de los Zhentarim.',
+        'Entiende enano y dracónico. Su compañero es Sombra. Tenía un perro-montura, Tostada, que murió peleando heroicamente contra los ilícidos en Orlbar. Está infectado de licantropía de lobo, mordido por un hombre lobo de la Tribu del Lobo Gris; aún no se ha transformado.',
       ],
       facts: [
         { label: 'Alias', value: 'Cofregrande' },
-        { label: 'Facción', value: 'Arpistas' },
-        { label: 'Padre', value: 'Glimpetor' },
+        { label: 'Familiar', value: 'Sombra' },
+        { label: 'Facción', value: 'Zhentarim (infiltrado)' },
         { label: 'Idiomas', value: 'Enano, dracónico' },
       ],
     },
@@ -200,7 +200,7 @@ export const party = {
       status: 'Se despidió (EP077)', dot: NEUTRAL,
       blurb: [
         'Autómata venido de Eberron, creado para la guerra y liberado al acabar esta; fue mercenario, soldado y finalmente profesor de esgrima. Los ilícidos lo raptaron y lo intercambiaron a la colonia de Orlbar.',
-        'Escapó y acabó con Jarlaxle y los drow de Bregan D’aerthe. No respira ni duerme, es inmune a la enfermedad de las profundidades y puede cambiar a una armadura de mithril. Se despidió del grupo en EP077 para volver con los suyos.',
+        'Escapó y acabó con Jarlaxle y los drow de Bregan D’aerthe. No respira ni duerme. Es serio, gentil y muy creativo a la hora de pelear.',
       ],
       facts: [
         { label: 'Origen', value: 'Eberron' },
