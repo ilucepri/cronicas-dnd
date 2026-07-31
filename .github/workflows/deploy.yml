@@ -12,7 +12,7 @@ on:
   repository_dispatch:
     types: [notes-updated]
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: '0 */6 * * *'
 
 concurrency:
   group: deploy
