@@ -87,7 +87,7 @@ export const campaigns = [
 export const about = {
   kicker: 'Sobre mí',
   heading: 'Quién escribe esto',
-  img: null,
+  img: 'about.jpg',
   paras: [
     'Me llamo Irene, soy desarrolladora y una apasionada del rol. Llevo tres años jugando cada semana, y por el camino le he cogido el gustillo (rozando la obsesión, he de admitir) a tener buenas notas: ordenadas, completas y fáciles de releer.',
     'Toda la crónica vive en mi Obsidian, pero quería poder leerla con un aspecto más estilizado. Observatorio Arcano es justo eso: una capa bonita sobre esas notas que las convierte en un archivo navegable sin dejar de ser las mismas notas de siempre.',
