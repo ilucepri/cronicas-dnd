@@ -1,18 +1,16 @@
 name: Construir y desplegar
 
-# Se ejecuta:
+# Se ejecuta SOLO cuando hay cambios reales (nada de cron periódico, que
+# acumulaba versiones y llenaba la cuota de almacenamiento gratis):
 #  - push a main (cuando cambias el código de la web)
-#  - manualmente desde la pestaña Actions
 #  - cuando chaotic-garden avisa de que has publicado (repository_dispatch)
-#  - cada 3 horas, como red de seguridad por si el aviso no llega
+#  - manualmente desde la pestaña Actions
 on:
   push:
     branches: [main]
   workflow_dispatch:
   repository_dispatch:
     types: [notes-updated]
-  schedule:
-    - cron: '0 */6 * * *'
 
 concurrency:
   group: deploy
