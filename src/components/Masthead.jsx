@@ -26,7 +26,7 @@ export default function Masthead() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingLeft: 37 }}>
           <span style={{ width: 20, height: 1, background: 'var(--color-accent-400)' }} />
           <span style={{ fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--color-accent-400)' }}>
-            Archivo de mesa · seis campañas
+            Archivo de mesa · campañas y one-shots
           </span>
         </div>
       </div>

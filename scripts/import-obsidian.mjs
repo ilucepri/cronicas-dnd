@@ -87,15 +87,22 @@ function sanitizeFilename(name) {
   return (safe || 'img') + ext.toLowerCase()
 }
 
-// EP090 - 20260623 - Título   /   EP035 - 20241126   /   EP026 - 20240709 Título
+// Acepta EP y fecha en cualquier orden y con/sin título:
+//   EP090 - 20260623 - Título   ·   EP035 - 20241126   ·   20260712 - EP01 - Título
 function parseSessionName(basename) {
-  const m = basename.match(/EP0*?(\d+)\D+?(\d{8})(.*)$/)
-  if (!m) return null
-  const n = parseInt(m[1], 10)
-  const date = m[2]
-  let title = (m[3] || '').replace(/^\s*[-–—]?\s*/, '').trim()
+  const ep = basename.match(/EP0*(\d+)/i)
+  const date = basename.match(/(\d{8})/)
+  if (!ep || !date) return null
+  const n = parseInt(ep[1], 10)
+  let title = basename
+    .replace(/EP0*\d+/i, '')
+    .replace(/\d{8}/, '')
+    .replace(/\s+/g, ' ')
+    .replace(/^[\s\-–—]+/, '')
+    .replace(/[\s\-–—]+$/, '')
+    .trim()
   if (!title) title = 'Sesión ' + String(n).padStart(3, '0')
-  return { n, date, title }
+  return { n, date: date[1], title }
 }
 
 function arcIdOf(campaignId, n) {
@@ -183,7 +190,7 @@ function buildLore(cfg, vaultPath, imgIndex, outImgDir) {
   convertLoreImagesToWebp(cfg.id)
   const partyName = (cfg.party || '').toLowerCase()
   const files = walk(vaultPath, (f) => f.toLowerCase().endsWith('.md')).filter((f) => {
-    if (/[\\/]sesiones[\\/]/i.test(f)) return false
+    if (/[\\/](sesiones|sessions)[\\/]/i.test(f)) return false
     return /#dnd\/lore\b/.test(fs.readFileSync(f, 'utf8'))
   })
 
@@ -294,18 +301,23 @@ function resolveImages(body, { campaignId, imgIndex, outDir }) {
 // ---- importación de una campaña --------------------------------------------
 
 function importCampaign(cfg) {
-  let vaultPath, sessionsDir, imgSearchRoot
+  let vaultPath, imgSearchRoot
   if (SOURCE === 'dg') {
     vaultPath = path.join(VAULT_DIR, DG_NOTES_BASE, cfg.vault)
-    sessionsDir = path.join(vaultPath, 'Sesiones')
     imgSearchRoot = path.join(VAULT_DIR, DG_IMG_ROOT) // índice global de imágenes DG
   } else {
     vaultPath = path.join(VAULT_DIR, cfg.vault)
-    sessionsDir = path.join(vaultPath, 'Sesiones')
-    imgSearchRoot = vaultPath
+    // Los one-shots comparten un Docs en la carpeta padre (Oneshots/Docs).
+    imgSearchRoot = cfg.group === 'oneshot' ? path.dirname(vaultPath) : vaultPath
+  }
+  // Las sesiones pueden estar en <vault>/Sesiones, <vault>/Sessions (así las
+  // deja Digital Garden en algunos one-shots) o directamente en <vault>.
+  let sessionsDir = vaultPath
+  for (const sub of ['Sesiones', 'Sessions']) {
+    if (fs.existsSync(path.join(vaultPath, sub))) { sessionsDir = path.join(vaultPath, sub); break }
   }
   if (!fs.existsSync(sessionsDir)) {
-    console.warn(`  ! No encuentro Sesiones en ${sessionsDir}`)
+    console.warn(`  ! No encuentro sesiones en ${vaultPath}`)
     return { id: cfg.id, count: 0 }
   }
 
@@ -340,6 +352,13 @@ function importCampaign(cfg) {
     }
     usedNums.add(meta.n)
     const raw = fs.readFileSync(file, 'utf8')
+    // Si el nombre de archivo no trae título, intenta sacarlo del encabezado H1
+    // (los one-shots lo llevan ahí: "# EP1 - 20260712 - La caída a Verdia").
+    if (/^Sesión \d/.test(meta.title)) {
+      const h1 = (raw.match(/^#\s+(.+)$/m) || [])[1]
+      const hMeta = h1 && parseSessionName(h1)
+      if (hMeta && !/^Sesión \d/.test(hMeta.title)) meta.title = hMeta.title
+    }
     const pre = SOURCE === 'dg' ? normalizeDgLinks(raw) : raw
     const cleaned = cleanBody(pre)
     const { body, stats } = resolveImages(cleaned, {
@@ -422,6 +441,7 @@ function main() {
     campaigns: campaigns.map((c) => ({
       id: c.id,
       name: c.name,
+      group: c.group || 'campaña',
       populated: !!c.vault && counts[c.id] > 0,
       count: counts[c.id] || 0,
     })),

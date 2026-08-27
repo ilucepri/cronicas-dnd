@@ -3,6 +3,13 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { campaignsIndex } from '../lib/data.js'
 import Icon from './Icon.jsx'
 
+// Apartados del selector, en orden. 'master' queda listo para el futuro.
+const GROUPS = [
+  { key: 'campaña', label: 'Campañas' },
+  { key: 'oneshot', label: 'One-shots' },
+  { key: 'master', label: 'Que masterizo' },
+]
+
 export default function Header({ campaignId, meta, arcCount }) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
@@ -65,32 +72,36 @@ export default function Header({ campaignId, meta, arcCount }) {
                 padding: 8, display: 'flex', flexDirection: 'column', gap: 2,
               }}
             >
-              <div style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-neutral-400)', padding: '6px 10px 4px' }}>
-                Cambiar de campaña
-              </div>
-              {campaignsIndex.map((c) => {
-                const active = c.id === campaignId
-                return (
-                  <button
-                    key={c.id}
-                    role="option"
-                    aria-selected={active}
-                    onClick={() => choose(c.id)}
-                    className="rowbtn"
-                    style={{
-                      all: 'unset', cursor: 'pointer', display: 'flex', alignItems: 'center',
-                      gap: 10, padding: '8px 10px', borderRadius: 7, fontSize: 15,
-                      background: active ? 'var(--color-accent-900)' : 'transparent',
-                      fontFamily: active ? 'var(--font-heading)' : 'inherit',
-                      color: active ? 'var(--color-text)' : 'var(--color-neutral-300)',
-                    }}
-                  >
-                    <span style={{ width: 6, height: 6, borderRadius: 99, flex: 'none', background: active ? 'var(--color-accent-400)' : 'var(--color-divider)' }} />
-                    <span style={{ flex: 1, textAlign: 'left' }}>{c.name}</span>
-                    <span style={{ fontSize: 12, color: 'var(--color-neutral-400)' }}>{c.populated ? c.count : '—'}</span>
-                  </button>
-                )
-              })}
+              {GROUPS.filter((g) => campaignsIndex.some((c) => (c.group || 'campaña') === g.key)).map((g, gi) => (
+                <div key={g.key}>
+                  <div style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-neutral-400)', padding: gi === 0 ? '6px 10px 4px' : '10px 10px 4px' }}>
+                    {g.label}
+                  </div>
+                  {campaignsIndex.filter((c) => (c.group || 'campaña') === g.key).map((c) => {
+                    const active = c.id === campaignId
+                    return (
+                      <button
+                        key={c.id}
+                        role="option"
+                        aria-selected={active}
+                        onClick={() => choose(c.id)}
+                        className="rowbtn"
+                        style={{
+                          all: 'unset', cursor: 'pointer', display: 'flex', alignItems: 'center',
+                          gap: 10, padding: '8px 10px', borderRadius: 7, fontSize: 15,
+                          background: active ? 'var(--color-accent-900)' : 'transparent',
+                          fontFamily: active ? 'var(--font-heading)' : 'inherit',
+                          color: active ? 'var(--color-text)' : 'var(--color-neutral-300)',
+                        }}
+                      >
+                        <span style={{ width: 6, height: 6, borderRadius: 99, flex: 'none', background: active ? 'var(--color-accent-400)' : 'var(--color-divider)' }} />
+                        <span style={{ flex: 1, textAlign: 'left' }}>{c.name}</span>
+                        <span style={{ fontSize: 12, color: 'var(--color-neutral-400)' }}>{c.populated ? c.count : '—'}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              ))}
             </div>
           </>
         )}

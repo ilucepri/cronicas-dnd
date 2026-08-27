@@ -79,6 +79,28 @@ export const campaigns = [
     intro: 'Una conspiración se teje alrededor de un libro rojo.',
     heroKicker: 'Crónica de campaña',
   },
+
+  // --- One-shots (partidas cortas que juega la autora) ---
+  {
+    id: 'verdia',
+    name: 'Verdia',
+    subtitle: 'D&D 5e · One-shot',
+    hashtag: 'Verdia',
+    vault: 'Oneshots/Verdia',
+    group: 'oneshot',
+    intro: 'One-shots de D&D 5e ambientados en Verdia.',
+    heroKicker: 'One-shot',
+  },
+  {
+    id: 'la-tumba-del-rey-traidor',
+    name: 'La Tumba del Rey Traidor',
+    subtitle: 'D&D 5e · One-shot',
+    hashtag: 'LaTumbaDelReyTraidor',
+    vault: 'Oneshots/La Tumba del Rey Traidor',
+    group: 'oneshot',
+    intro: 'One-shot de D&D 5e: la Tumba del Rey Traidor.',
+    heroKicker: 'One-shot',
+  },
 ]
 
 // Página "Sobre mí" (de sitio, accesible desde la barra en cualquier campaña).
