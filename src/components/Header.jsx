@@ -28,10 +28,14 @@ export default function Header({ campaignId, meta, arcCount }) {
     navigate(`/${id}`)
   }
 
-  const metaText =
-    meta && meta.populated
-      ? `${meta.count} ${meta.count === 1 ? 'sesión' : 'sesiones'}` + (arcCount > 0 ? ` · ${arcCount} arcos` : '')
-      : 'Sin notas todavía'
+  let metaText = 'Sin notas todavía'
+  if (meta && meta.populated) {
+    if (meta.count > 0) {
+      metaText = `${meta.count} ${meta.count === 1 ? 'sesión' : 'sesiones'}` + (arcCount > 0 ? ` · ${arcCount} arcos` : '')
+    } else if (meta.lore > 0) {
+      metaText = `${meta.lore} ${meta.lore === 1 ? 'entrada' : 'entradas'} de mundo`
+    }
+  }
 
   return (
     <header

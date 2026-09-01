@@ -54,6 +54,19 @@ export function useCampaign() {
   return useOutletContext().campaign
 }
 
+// Índice de una campaña. Las ambientaciones (grupo master) no tienen portada
+// con tarjetas: al entrar van directas a su primera entrada de mundo.
+function CampaignHome() {
+  const campaign = useCampaign()
+  if (campaign.group === 'master') {
+    const first =
+      [...campaign.lore].filter((l) => !l.type).sort((a, b) => a.name.localeCompare(b.name, 'es'))[0] ||
+      campaign.lore[0]
+    if (first) return <Navigate to={`/${campaign.id}/mundo/${first.id}`} replace />
+  }
+  return <Home />
+}
+
 export default function App() {
   return (
     <>
@@ -61,7 +74,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/oro-sobre-plata" replace />} />
         <Route path="/:campaign" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<CampaignHome />} />
           <Route path="sesiones" element={<Sessions />} />
           <Route path="sesion/:n" element={<Session />} />
           <Route path="personajes" element={<Party />} />

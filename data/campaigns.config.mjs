@@ -101,6 +101,20 @@ export const campaigns = [
     intro: 'One-shot de D&D 5e: la Tumba del Rey Traidor.',
     heroKicker: 'One-shot',
   },
+
+  // --- Ambientaciones que masteriza ---
+  {
+    id: 'strixhaven',
+    name: 'Strixhaven',
+    kicker: 'Ambientación',
+    subtitle: 'D&D 5e · Arcavios',
+    hashtag: 'Strixhaven',
+    vault: 'Master/Strixhaven',
+    group: 'master',
+    intro:
+      'La gran universidad de magia de Strixhaven, en el mundo de Arcavios: cinco colegios enfrentados por su filosofía, unos dragones que la fundaron y un campus donde estudiar puede ser tan peligroso como emocionante. Una guía para mis jugadores, para que nadie se pierda buscando lo básico.',
+    heroKicker: 'Ambientación',
+  },
 ]
 
 // Página "Sobre mí" (de sitio, accesible desde la barra en cualquier campaña).

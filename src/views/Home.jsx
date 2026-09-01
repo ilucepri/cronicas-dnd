@@ -55,9 +55,16 @@ export default function Home() {
                 <Icon name="arrowRight" size={14} />
               </button>
             )}
-            <button onClick={() => navigate(`${base}/sesiones`)} className="btn btn-ghost" style={{ cursor: 'pointer' }}>
-              Explorar sesiones
-            </button>
+            {sessions.length > 0 ? (
+              <button onClick={() => navigate(`${base}/sesiones`)} className="btn btn-ghost" style={{ cursor: 'pointer' }}>
+                Explorar sesiones
+              </button>
+            ) : campaign.lore.length > 0 ? (
+              <button onClick={() => navigate(`${base}/mundo`)} className="btn btn-primary" style={{ cursor: 'pointer' }}>
+                Explorar el mundo
+                <Icon name="arrowRight" size={14} />
+              </button>
+            ) : null}
           </div>
         </div>
         <HeroCover campaign={campaign} />
@@ -84,7 +91,8 @@ export default function Home() {
       </div>
       </>)}
 
-      <div style={{ display: 'grid', gridTemplateColumns: loreTop.length ? '1.4fr 1fr' : '1fr', gap: 'var(--space-8)', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: recent.length > 0 && loreTop.length > 0 ? '1.4fr 1fr' : '1fr', gap: 'var(--space-8)', alignItems: 'start' }}>
+        {recent.length > 0 && (
         <div>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 'var(--space-4)' }}>
             <h3>Sesiones recientes</h3>
@@ -103,6 +111,7 @@ export default function Home() {
             ))}
           </div>
         </div>
+        )}
         {loreTop.length > 0 && (
         <div>
           <h3 style={{ marginBottom: 'var(--space-4)' }}>El mundo</h3>

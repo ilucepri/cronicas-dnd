@@ -125,6 +125,7 @@ function slugify(name) {
 // Tipo (etiqueta) deducido de la carpeta contenedora. '' si no está claro.
 function deriveLoreType(file, vaultPath) {
   const rel = path.relative(vaultPath, file).replace(/\\/g, '/').toLowerCase()
+  if (rel.includes('colegio')) return 'Colegio'
   if (rel.includes('dragon')) return 'Dragón'
   if (rel.includes('mision')) return 'Misión'
   if (rel.includes('lugar')) return 'Lugar'
@@ -318,7 +319,7 @@ function importCampaign(cfg) {
   }
   if (!fs.existsSync(sessionsDir)) {
     console.warn(`  ! No encuentro sesiones en ${vaultPath}`)
-    return { id: cfg.id, count: 0 }
+    return { id: cfg.id, count: 0, lore: 0 }
   }
 
   // Solo regeneramos las imágenes de sesión (subcarpeta img/). Los retratos y
@@ -337,9 +338,12 @@ function importCampaign(cfg) {
   const allMissing = []
 
   for (const file of files) {
-    const meta = parseSessionName(path.basename(file, '.md'))
+    const base = path.basename(file, '.md')
+    const meta = parseSessionName(base)
     if (!meta) {
-      console.warn(`  ! Nombre no reconocido: ${path.basename(file)}`)
+      // Solo avisa si el archivo parecía una sesión (evita ruido con notas de
+      // ambientación que viven en la raíz de un setting).
+      if (/ep\s*\d/i.test(base)) console.warn(`  ! Nombre no reconocido: ${base}`)
       continue
     }
     // Número de episodio duplicado (error de numeración en el vault): se
@@ -393,6 +397,7 @@ function importCampaign(cfg) {
   const data = {
     id: cfg.id,
     name: cfg.name,
+    group: cfg.group || 'campaña',
     cover,
     kicker: cfg.kicker,
     subtitle: cfg.subtitle,
@@ -417,7 +422,7 @@ function importCampaign(cfg) {
     `  ✓ ${cfg.name}: ${sessions.length} sesiones, ${loreEntries.length} entradas de mundo, ${totalImgs} imágenes copiadas` +
       (missCount ? `, ${missCount} sin resolver (${[...new Set(allMissing)].slice(0, 4).join(', ')}…)` : ''),
   )
-  return { id: cfg.id, count: sessions.length }
+  return { id: cfg.id, count: sessions.length, lore: loreEntries.length }
 }
 
 // ---- main ------------------------------------------------------------------
@@ -427,13 +432,16 @@ function main() {
   fs.mkdirSync(path.join(ROOT, 'src', 'data'), { recursive: true })
 
   const counts = {}
+  const lores = {}
   for (const cfg of campaigns) {
     if (!cfg.vault) {
       counts[cfg.id] = 0
+      lores[cfg.id] = 0
       continue
     }
     const r = importCampaign(cfg)
     counts[r.id] = r.count
+    lores[r.id] = r.lore
   }
 
   const index = {
@@ -442,8 +450,11 @@ function main() {
       id: c.id,
       name: c.name,
       group: c.group || 'campaña',
-      populated: !!c.vault && counts[c.id] > 0,
+      // "Poblada" = tiene contenido de cualquier tipo (sesiones o mundo), para
+      // que las ambientaciones (solo mundo, sin sesiones) no salgan como vacías.
+      populated: !!c.vault && (counts[c.id] > 0 || lores[c.id] > 0),
       count: counts[c.id] || 0,
+      lore: lores[c.id] || 0,
     })),
   }
   fs.writeFileSync(
