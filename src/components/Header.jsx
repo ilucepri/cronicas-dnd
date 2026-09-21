@@ -7,7 +7,7 @@ import Icon from './Icon.jsx'
 const GROUPS = [
   { key: 'campaña', label: 'Campañas' },
   { key: 'oneshot', label: 'One-shots' },
-  { key: 'master', label: 'Que masterizo' },
+  { key: 'master', label: 'Que mastereo' },
 ]
 
 export default function Header({ campaignId, meta, arcCount }) {

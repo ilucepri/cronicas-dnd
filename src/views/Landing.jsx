@@ -7,7 +7,7 @@ const HEADER = (import.meta.env.BASE_URL || '/') + 'header.jpg'
 const GROUPS = [
   { key: 'campaña', label: 'Campañas', sub: 'Las crónicas largas que juego, sesión a sesión.' },
   { key: 'oneshot', label: 'One-shots', sub: 'Aventuras cortas, de una tarde o unas pocas sesiones.' },
-  { key: 'master', label: 'Que masterizo', sub: 'Las ambientaciones que preparo como máster.' },
+  { key: 'master', label: 'Que mastereo', sub: 'Las ambientaciones que preparo como máster.' },
 ]
 
 function cardMeta(c, data) {
