@@ -37,12 +37,12 @@ function CampaignCard({ c }) {
     <Link
       to={`/${c.id}`}
       className="card hoverlift"
-      style={{ textDecoration: 'none', color: 'inherit', border: 'none', padding: 0, overflow: 'hidden' }}
+      style={{ textDecoration: 'none', color: 'inherit', border: 'none', padding: 0, overflow: 'hidden', height: '100%' }}
     >
-      <div style={{ aspectRatio: '3 / 2', background: 'var(--color-neutral-900)' }}>
+      <div style={{ aspectRatio: '3 / 2', flex: '0 0 auto', background: 'var(--color-neutral-900)', overflow: 'hidden' }}>
         <Cover data={data} />
       </div>
-      <div style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+      <div style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
           <div className="card-title" style={{ margin: 0, fontSize: 20 }}>{data.name}</div>
         </div>
@@ -100,7 +100,7 @@ export default function Landing() {
                 <span style={{ fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--color-accent-400)' }}>{g.label}</span>
               </div>
               <p className="text-muted" style={{ margin: '0 0 var(--space-6)', fontSize: 14 }}>{g.sub}</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gridAutoRows: '1fr', gap: 'var(--space-4)' }}>
                 {items.map((c) => <CampaignCard key={c.id} c={c} />)}
               </div>
             </section>
