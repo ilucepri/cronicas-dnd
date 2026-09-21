@@ -14,6 +14,7 @@ import Lore from './views/Lore.jsx'
 import LoreItem from './views/LoreItem.jsx'
 import Timeline from './views/Timeline.jsx'
 import EmptyCampaign from './views/EmptyCampaign.jsx'
+import Landing from './views/Landing.jsx'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -72,7 +73,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Navigate to="/oro-sobre-plata" replace />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/:campaign" element={<Layout />}>
           <Route index element={<CampaignHome />} />
           <Route path="sesiones" element={<Sessions />} />
