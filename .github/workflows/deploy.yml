@@ -11,6 +11,11 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [notes-updated]
+  # Red de seguridad cada 6h: aunque el aviso instantáneo falle (token caducado),
+  # lo que publiques en Obsidian sale como muy tarde en unas horas. Con la
+  # retención de versiones de Firebase puesta, no llena el almacenamiento.
+  schedule:
+    - cron: '0 */6 * * *'
 
 concurrency:
   group: deploy
