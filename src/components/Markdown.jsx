@@ -60,39 +60,48 @@ function Runs({ runs, resolveLink, campaignId }) {
 
 function SessionImage({ alt, src }) {
   const [failed, setFailed] = useState(false)
+  const [ratio, setRatio] = useState(null) // ancho/alto una vez cargada
   const url = src ? assetUrl(src) : ''
   const showPlaceholder = !url || failed
+
+  if (showPlaceholder) {
+    return (
+      <div
+        style={{
+          aspectRatio: '16 / 9', borderRadius: 'var(--radius-md)', overflow: 'hidden',
+          margin: '0 0 18px', boxShadow: 'var(--shadow-sm)', background: 'var(--color-neutral-900)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center',
+          padding: 16, color: 'var(--color-neutral-500)', fontSize: 13, fontStyle: 'italic',
+        }}
+      >
+        {alt || 'Imagen de la sesión'}
+      </div>
+    )
+  }
+
+  // Las imágenes se muestran completas (sin recorte), con su proporción real.
+  // Las verticales (retratos de personajes) se limitan en ancho y se centran
+  // para que no salgan enormes; las apaisadas ocupan el ancho disponible.
+  const portrait = ratio !== null && ratio < 0.9
   return (
-    <div
+    <img
+      src={url}
+      alt={alt}
+      loading="lazy"
+      onLoad={(e) => setRatio(e.target.naturalWidth / e.target.naturalHeight)}
+      onError={() => setFailed(true)}
       style={{
-        aspectRatio: '16 / 9',
+        display: 'block',
+        margin: '0 auto 18px',
+        width: 'auto',
+        height: 'auto',
+        maxWidth: portrait ? 'min(100%, 360px)' : '100%',
+        maxHeight: portrait ? 540 : 520,
         borderRadius: 'var(--radius-md)',
-        overflow: 'hidden',
-        margin: '0 0 18px',
         boxShadow: 'var(--shadow-sm)',
         background: 'var(--color-neutral-900)',
       }}
-    >
-      {showPlaceholder ? (
-        <div
-          style={{
-            width: '100%', height: '100%', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', textAlign: 'center', padding: 16,
-            color: 'var(--color-neutral-500)', fontSize: 13, fontStyle: 'italic',
-          }}
-        >
-          {alt || 'Imagen de la sesión'}
-        </div>
-      ) : (
-        <img
-          src={url}
-          alt={alt}
-          loading="lazy"
-          onError={() => setFailed(true)}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      )}
-    </div>
+    />
   )
 }
 
