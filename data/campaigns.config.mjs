@@ -79,6 +79,17 @@ export const campaigns = [
     intro: 'Una conspiración se teje alrededor de un libro rojo.',
     heroKicker: 'Crónica de campaña',
   },
+  {
+    id: 'draeteria',
+    name: 'Crónicas de Draeteria',
+    subtitle: 'D&D 5e · Draeteria',
+    party: 'El grupo',
+    hashtag: 'CronicasDeDraeteria',
+    vault: 'Crónicas de Draeteria',
+    intro:
+      'Un mundo de fantasía al norte del Gran Meridiano, con dos reinos enfrentados: Casian, de tierras fértiles, magia y caballería, y Malfesto, de tundras y tecnología mágica industrial. La historia arranca en Leóciras, capital de Casian sobre el lago del Ojo del Dragón, de la mano de la élite de los Grifos Guardianes.',
+    heroKicker: 'Crónica de campaña',
+  },
 
   // --- One-shots (partidas cortas que juega la autora) ---
   {
